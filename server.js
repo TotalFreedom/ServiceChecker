@@ -4,7 +4,7 @@ var utils = require('./utils');
 
 var server;
 var port = process.env.VCAP_APP_PORT || 8080;
-var interval = 2*60*1000; // milisec
+var interval = 2*60*1000; // millisec
 
 var requestHandler = function (req, res) {
 
