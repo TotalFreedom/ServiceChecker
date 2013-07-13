@@ -23,7 +23,7 @@ var getStatus = function () {
 };
 exports.getStatus = getStatus;
 
-var checkService = function (url, index) {
+var checkService = function (url, caller, index) {
   // Make request
   utils.request(url, function (reply) {
     var stat = utils.parseReply(reply);
@@ -33,10 +33,11 @@ var checkService = function (url, index) {
     } else {
       checks[index].push(true);
     }
-    
-    status[index] = stat + utils.calculateUptime(checks[index]);
+    var newService = {};
+	newService[caller] = stat + utils.calculateUptime(checks[index])
+    status[index] = newService;
     utils.log("Updated with " + url);
-    utils.log("-> " + status[index].split(":")[1] + " (" + status[index].split(":")[2] + "%)");
+    utils.log("-> " + status[index][caller].split(":")[1] + " (" + status[index][caller].split(":")[2] + "%)");
   });
 };
 
@@ -47,37 +48,37 @@ statusCheck = function (callback) {
   
     // Minecraft website
     if (element["minecraft.net"]) {
-      checkService("http://minecraft.net", index);
+      checkService("http://minecraft.net", "minecraft.net", index);
       return;
     }
     
     // Login server
     if (element["login.minecraft.net"]) {
-      checkService("http://login.minecraft.net/session", index);
+      checkService("http://login.minecraft.net/session", "login.minecraft.net", index);
       return;
     }
     
     // Session server
     if (element["session.minecraft.net"]) {
-      checkService("http://session.minecraft.net/game/joinserver.jsp", index);
+      checkService("http://session.minecraft.net/game/joinserver.jsp", "session.minecraft.net", index);
       return;
     }
     
     // Account server
     if (element["account.mojang.com"]) {
-      checkService("https://account.mojang.com", index);
+      checkService("https://account.mojang.com", "account.mojang.com", index);
       return;
     }
     
     // Account server
     if (element["auth.mojang.com"]) {
-      checkService("https://authserver.mojang.com/authenticate", index);
+      checkService("https://authserver.mojang.com/authenticate", "auth.mojang.com", index);
       return;
     }
     
     // Skins server
     if (element["skins.minecraft.net"]) {
-      checkService("http://s3.amazonaws.com/MinecraftSkins/BurningFurnace.png", index);
+      checkService("http://s3.amazonaws.com/MinecraftSkins/BurningFurnace.png", "skins.minecraft.net", index);
       return;
     }
     

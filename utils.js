@@ -103,7 +103,7 @@ exports.request = function (address, callback) {
   });
   
   req.on('socket', function (socket) {
-    socket.setTimeout(4git000);
+    socket.setTimeout(4000);
     
     socket.on('timeout', function() {
       if (hasCalled) {
