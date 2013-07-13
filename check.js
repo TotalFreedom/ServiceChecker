@@ -40,6 +40,7 @@ var checkService = function (url, caller, index) {
     utils.log("-> " + status[index][caller].split(":")[1] + " (" + status[index][caller].split(":")[2] + "%)");
   });
 };
+exports.checkService = checkService;
 
 statusCheck = function (callback) {
   callback = callback || function () {};

@@ -3,17 +3,20 @@ var http = require('http');
 var https = require('https');
 var url = require('url');
 
-exports.getVersion = function () {
+var getVersion = function () {
   return 1;
 };
+exports.getVersion = getVersion;
 
-exports.log = function (text, level) {
-  console.log("[" + (level || "INFO").toUpperCase() + "] " + text); 
-};
-
-exports.getUTCTime = function () {
+var getUTCTime = function () {
   return moment.utc().format("HH:mm:ss") + " UTC";
 };
+exports.getUTCTime = getUTCTime;
+
+var log = function (text, level) {
+  console.log("[" + (level || "INFO").toUpperCase() + "] " + getUTCTime() + " - " + text); 
+};
+exports.log = log;
 
 var parseReply = function (code) {
   switch (code) {
@@ -51,7 +54,7 @@ var parseReply = function (code) {
 };
 exports.parseReply = parseReply;
 
-exports.calculateUptime = function (uptime) {
+var calculateUptime = function (uptime) {
   if (uptime.length == 0) {
     return 100.0;
   }
@@ -66,8 +69,9 @@ exports.calculateUptime = function (uptime) {
   return (val/uptime.length).toFixed(1); // One decimal
   
 };
+exports.calculateUptime = calculateUptime;
 
-exports.request = function (address, callback) {
+var request = function (address, callback) {
   var hasCalled = false; // Callback status
   var secure = (url.parse(address).protocol == "https:");
   
@@ -128,3 +132,4 @@ exports.request = function (address, callback) {
   
 
 };
+exports.request = request;
