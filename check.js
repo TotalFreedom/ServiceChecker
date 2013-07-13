@@ -1,4 +1,5 @@
 var http = require('http');
+var config = require('./config');
 var utils = require('./utils');
 
 var status = [
@@ -8,7 +9,7 @@ var status = [
   {"account.mojang.com":"green:Online:100.0"},
   {"auth.mojang.com":"green:Online:100.0"},
   {"skins.minecraft.net":"green:Online:100.0"},
-  {"version": utils.getVersion()},
+  {"version": config.version},
   {"lastcheck": utils.getUTCTime()}
 ];
 

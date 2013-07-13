@@ -2,11 +2,7 @@ var moment = require('moment');
 var http = require('http');
 var https = require('https');
 var url = require('url');
-
-var getVersion = function () {
-  return 1;
-};
-exports.getVersion = getVersion;
+var config = require('./config');
 
 var getUTCTime = function () {
   return moment.utc().format("HH:mm:ss") + " UTC";
@@ -107,7 +103,7 @@ var request = function (address, callback) {
   });
   
   req.on('socket', function (socket) {
-    socket.setTimeout(4000);
+    socket.setTimeout(config.timeout);
     
     socket.on('timeout', function() {
       if (hasCalled) {

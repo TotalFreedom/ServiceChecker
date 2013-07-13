@@ -1,10 +1,9 @@
 var http = require('http');
 var check = require('./check');
 var utils = require('./utils');
+var config = require('./config');
 
 var server;
-var port = process.env.VCAP_APP_PORT || 8080;
-var interval = 2*60*1000; // millisec
 
 var requestHandler = function (req, res) {
 
@@ -26,15 +25,15 @@ var requestHandler = function (req, res) {
 
 var main = function() {
   server = http.createServer();
-  server.listen(port, function() {
-    utils.log("Server listening on port " + port);
+  server.listen(config.port, function() {
+    utils.log("Server listening on port " + config.port);
   });
   
   server.on('request', requestHandler);
   utils.log("Attached request handler to http server");
   
-  setInterval(check.statusCheck, interval);
-  utils.log("Service check scheduled every " + interval/1000 + " seconds");
+  setInterval(check.statusCheck, config.interval);
+  utils.log("Service check scheduled every " + config.interval/1000 + " seconds");
   statusCheck();
   
 };
