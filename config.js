@@ -1,7 +1,7 @@
 
 exports.port = process.env.VCAP_APP_PORT || 8050;
 
-exports.version = 1.0;
+exports.version = "1.0";
 
 exports.timeout = 4000;
 
