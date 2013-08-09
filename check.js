@@ -4,11 +4,12 @@ var utils = require('./utils');
 
 var status = [
   {"minecraft.net":"green:Online:100.0"},
+  {"account.mojang.com":"green:Online:100.0"},
+  {"authserver.mojang.com":"green:Online:100.0"},
+  {"skins.minecraft.net":"green:Online:100.0"},
+  {"auth.mojang.com":"green:Online:100.0"},
   {"login.minecraft.net":"green:Online:100.0"},
   {"session.minecraft.net":"green:Online:100.0"},
-  {"account.mojang.com":"green:Online:100.0"},
-  {"auth.mojang.com":"green:Online:100.0"},
-  {"skins.minecraft.net":"green:Online:100.0"},
   {"version": config.version},
   {"lastcheck": utils.getUTCTime()}
 ];
@@ -54,33 +55,39 @@ statusCheck = function (callback) {
       return;
     }
     
-    // Login server
-    if (element["login.minecraft.net"]) {
-      checkService("http://login.minecraft.net/session", "login.minecraft.net", index);
-      return;
-    }
-    
-    // Session server
-    if (element["session.minecraft.net"]) {
-      checkService("http://session.minecraft.net/game/joinserver.jsp", "session.minecraft.net", index);
-      return;
-    }
-    
     // Account server
     if (element["account.mojang.com"]) {
       checkService("https://account.mojang.com", "account.mojang.com", index);
       return;
     }
-    
-    // Account server
-    if (element["auth.mojang.com"]) {
-      checkService("https://authserver.mojang.com/authenticate", "auth.mojang.com", index);
+	
+	// Authenticantion server
+    if (element["authserver.mojang.com"]) {
+      checkService("https://authserver.mojang.com/authenticate", "account.mojang.com", index);
+      return;
+    }
+	
+	// Skins server
+    if (element["skins.minecraft.net"]) {
+      checkService("http://s3.amazonaws.com/MinecraftSkins/BurningFurnace.png", "skins.minecraft.net", index);
       return;
     }
     
-    // Skins server
-    if (element["skins.minecraft.net"]) {
-      checkService("http://s3.amazonaws.com/MinecraftSkins/BurningFurnace.png", "skins.minecraft.net", index);
+    // Account server (Legacy)
+    if (element["auth.mojang.com"]) {
+      checkService("https://auth.mojang.com/", "auth.mojang.com", index);
+      return;
+    }
+	
+	// Login server (Legacy)
+    if (element["login.minecraft.net"]) {
+      checkService("http://login.minecraft.net/session", "login.minecraft.net", index);
+      return;
+    }
+    
+    // Session server (Legacy)
+    if (element["session.minecraft.net"]) {
+      checkService("http://session.minecraft.net/game/joinserver.jsp", "session.minecraft.net", index);
       return;
     }
     

@@ -1,5 +1,5 @@
 
-exports.port = process.env.VCAP_APP_PORT || 8080;
+exports.port = process.env.VCAP_APP_PORT || 8050;
 
 exports.version = 1.0;
 
